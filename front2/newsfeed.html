@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset = "utf-8">
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page de connexion</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="" defer></script>
+</head>
+
+<body>
+
+    <header class="header">
+        <img src="groupomania_logos/icon-left-font-monochrome-black.png" class="header-logo">
+      </header>
+
+    <nav>
+        <button>Mon compte</button>
+        <button>Se déconnecter</button>
+    </nav>
+
+
+    <div id="app">
+        <h1>GROUPOMANIA</h1>
+
+        <input type="text" placeholder="Écrire un message..." v-model="message">
+
+        {{ message }}
+        <button @click="ajouterPost" v-if="message != '' ">Poster</button>
+
+        <p v-for="post in posts" :key="post.id" @click="inverser">
+            {{ post.content }}
+
+
+        </p>
+
+        <post v-for="post in posts" v-bind:content="post"></post>
+    </div>
+
+    <script>
+const vm = Vue.createApp({
+    data(){
+        return {
+            posts: [
+                {id: 1, title: "", user_id: 2, datetime: timestamp, content: "post 1", image:""},
+                {id: 2, title: "", user_id: 2, datetime: timestamp, content: "post 2", image:""}, 
+                {id: 3, title: "", user_id: 2, datetime: timestamp, content: "post 3", image:""}
+            ]
+        }
+    },
+
+    methods:{
+        inverser(){
+            this.posts.reverse();
+        },
+        ajouterPost(){
+            this.posts.push(this.message);
+            this.message = ''; 
+        }
+    }
+
+});
+
+vm.component('post', {
+    props: ["content"],
+    template: `<p> {{ content }}`//là où j'écris l'html, entre ``
+});
+
+vm.mount("#app");
+    </script>
+
+    <style>
+
+    </style>
+</body>
+
+</html>
